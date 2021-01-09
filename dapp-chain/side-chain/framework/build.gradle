@@ -46,6 +46,8 @@ dependencies {
 
     compile "com.madgag.spongycastle:core:1.58.0.0"
     compile "com.madgag.spongycastle:prov:1.58.0.0"
+    compile 'mysql:mysql-connector-java:8.0.20'
+    compile 'redis.clients:jedis:2.6.2'
 
     compile group: 'com.typesafe', name: 'config', version: '1.3.2'
 

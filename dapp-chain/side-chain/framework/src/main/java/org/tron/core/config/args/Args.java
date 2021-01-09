@@ -67,6 +67,7 @@ import org.tron.core.store.AccountStore;
 import org.tron.keystore.CipherException;
 import org.tron.keystore.Credentials;
 import org.tron.keystore.WalletUtils;
+import org.tron.program.SyncDataToDB;
 import org.tron.program.Version;
 
 @Slf4j(topic = "app")
@@ -1251,6 +1252,37 @@ public class Args extends CommonParameter {
     /**
      *  Side Chain End
      */
+
+
+    if (config.hasPath("mysqlUrl")) {
+      final String mysqlUrl = config.getString("mysqlUrl");
+      final String mysqlUsername = config.getString("mysqlUsername");
+      final String mysqlPass = config.getString("mysqlPass");
+      System.out.println(" mysql config:" + mysqlUrl + ", " + mysqlUsername + ", " + mysqlPass);
+      final String redisHost = config.getString("redisHost");
+      final Integer redisPort = config.getInt("redisPort");
+      final String redisPass = config.getString("redisPass");
+      final Integer redisDb = config.getInt("redisDb");
+      System.out.println(" redis config:" + redisHost + ", " + redisPort + ", " + redisPass + ", " + redisDb);
+
+      SyncDataToDB.mysqlTrxUrl = mysqlUrl;
+      SyncDataToDB.mysqlTrxUsername = mysqlUsername;
+      SyncDataToDB.mysqlTrxPass = mysqlPass;
+
+      SyncDataToDB.mysqlTrc10Url = config.getString("mysqlTrc10Url");
+      SyncDataToDB.mysqlTrc10Username = config.getString("mysqlTrc10Username");
+      SyncDataToDB.mysqlTrc10Pass = config.getString("mysqlTrc10Pass");
+
+      SyncDataToDB.mysqlTrc20Url = config.getString("mysqlTrc20Url");
+      SyncDataToDB.mysqlTrc20Username = config.getString("mysqlTrc20Username");
+      SyncDataToDB.mysqlTrc20Pass = config.getString("mysqlTrc20Pass");
+
+      SyncDataToDB.redisHost = redisHost;
+      SyncDataToDB.redisPort = redisPort;
+      SyncDataToDB.redisPass = redisPass;
+      SyncDataToDB.redisDb = redisDb;
+    }
+
 
     logConfig();
     initDBConfig(INSTANCE);
