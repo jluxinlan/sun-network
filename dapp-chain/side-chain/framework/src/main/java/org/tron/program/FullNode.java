@@ -369,17 +369,17 @@ public class FullNode {
 
   private static VMActuator vmActuator = new VMActuator(true);
 
+
+
   private static ProgramResult triggerFromVM(String contractAddress, byte[] data,
                                              BlockCapsule baseBlockCap) {
-    SmartContractOuterClass.TriggerSmartContract.Builder build = SmartContractOuterClass.TriggerSmartContract
-            .newBuilder();
+    SmartContractOuterClass.TriggerSmartContract.Builder build = SmartContractOuterClass.TriggerSmartContract.newBuilder();
     build.setData(ByteString.copyFrom(data));
     build.setOwnerAddress(ByteString.EMPTY);
     build.setCallValue(0);
     build.setCallTokenValue(0);
     build.setTokenId(0);
-    build.setContractAddress(ByteString
-            .copyFrom(Objects.requireNonNull(Commons.decodeFromBase58Check(contractAddress))));
+    build.setContractAddress(ByteString.copyFrom(Commons.decodeFromBase58Check(contractAddress)));
     TransactionCapsule trx = new TransactionCapsule(build.build(),
             Protocol.Transaction.Contract.ContractType.TriggerSmartContract);
     Protocol.Transaction.Builder txBuilder = trx.getInstance().toBuilder();
@@ -391,13 +391,17 @@ public class FullNode {
             new TransactionCapsule(txBuilder.build()),
             StoreFactory.getInstance(), true,
             false);
+
     try {
       vmActuator.validate(context);
       vmActuator.execute(context);
     } catch (Exception e) {
       logger.warn("{} trigger failed!", contractAddress);
+      logger.error("", e);
     }
-    return context.getProgramResult();
+
+    ProgramResult result = context.getProgramResult();
+    return result;
   }
 
   private static BigInteger toBigInteger(byte[] input) {
