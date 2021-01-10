@@ -344,8 +344,9 @@ public class FullNode {
             && !result.isRevert() && StringUtils.isEmpty(result.getRuntimeError())
             && result.getHReturn() != null) {
       try {
-        logger.info(" >>>>> {} getTRC20Balance success", contractAddress);
-        return toBigInteger(result.getHReturn());
+        final BigInteger bigInteger = toBigInteger(result.getHReturn());
+        logger.info(" >>>>> {} getTRC20Balance success {}", contractAddress, bigInteger);
+        return bigInteger;
       } catch (Exception e) {
         logger.error("", e);
       }
@@ -360,8 +361,9 @@ public class FullNode {
             && !result.isRevert() && StringUtils.isEmpty(result.getRuntimeError())
             && result.getHReturn() != null) {
       try {
-        logger.info(" >>>>> {} getTRC20Decimal success", contractAddress);
-        return toBigInteger(result.getHReturn());
+        final BigInteger bigInteger = toBigInteger(result.getHReturn());
+        logger.info(" >>>>> {} getTRC20Decimal success {}", contractAddress, bigInteger);
+        return bigInteger;
       } catch (Exception e) {
         logger.error("", e);
       }
