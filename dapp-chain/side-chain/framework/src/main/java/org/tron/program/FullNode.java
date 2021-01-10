@@ -339,11 +339,12 @@ public class FullNode {
                                             BlockCapsule baseBlockCap) {
     byte[] data = Bytes.concat(Hex.decode("70a082310000000000000000000000"),
             Commons.decodeFromBase58Check(ownerAddress));
-    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap);
+    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap, ownerAddress);
     if (result != null
             && !result.isRevert() && StringUtils.isEmpty(result.getRuntimeError())
             && result.getHReturn() != null) {
       try {
+        logger.info(" >>>>> {} getTRC20Balance success", contractAddress);
         return toBigInteger(result.getHReturn());
       } catch (Exception e) {
         logger.error("", e);
@@ -354,11 +355,12 @@ public class FullNode {
 
   private static BigInteger getTRC20Decimal(String contractAddress, BlockCapsule baseBlockCap) {
     byte[] data = Hex.decode("313ce567");
-    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap);
+    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap, ByteString.EMPTY.toStringUtf8());
     if (result != null
             && !result.isRevert() && StringUtils.isEmpty(result.getRuntimeError())
             && result.getHReturn() != null) {
       try {
+        logger.info(" >>>>> {} getTRC20Decimal success", contractAddress);
         return toBigInteger(result.getHReturn());
       } catch (Exception e) {
         logger.error("", e);
@@ -372,10 +374,10 @@ public class FullNode {
 
 
   private static ProgramResult triggerFromVM(String contractAddress, byte[] data,
-                                             BlockCapsule baseBlockCap) {
+                                             BlockCapsule baseBlockCap, String ownAddress) {
     SmartContractOuterClass.TriggerSmartContract.Builder build = SmartContractOuterClass.TriggerSmartContract.newBuilder();
     build.setData(ByteString.copyFrom(data));
-    build.setOwnerAddress(ByteString.EMPTY);
+    build.setOwnerAddress(ByteString.copyFromUtf8(ownAddress));
     build.setCallValue(0);
     build.setCallTokenValue(0);
     build.setTokenId(0);
