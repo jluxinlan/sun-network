@@ -409,6 +409,7 @@ public class FullNode {
   }
 
   private static BigInteger toBigInteger(byte[] input) {
+    logger.info(" >>>> input:{}", Arrays.toString(input));
     if (input != null && input.length > 0) {
       try {
         if (input.length > 32) {
