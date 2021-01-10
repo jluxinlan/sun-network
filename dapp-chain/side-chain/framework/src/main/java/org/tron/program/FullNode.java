@@ -416,8 +416,10 @@ public class FullNode {
         }
 
         String hex = Hex.toHexString(input);
+        logger.info(" >>>> hex : {}", hex);
         return hexStrToBigInteger(hex);
       } catch (Exception e) {
+        logger.error("", e);
       }
     }
     return null;
@@ -428,6 +430,7 @@ public class FullNode {
       try {
         return new BigInteger(hexStr, 16);
       } catch (Exception e) {
+        logger.error("", e);
       }
     }
     return null;
