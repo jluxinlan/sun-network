@@ -339,7 +339,7 @@ public class FullNode {
                                             BlockCapsule baseBlockCap) {
     byte[] data = Bytes.concat(Hex.decode("70a082310000000000000000000000"),
             Commons.decodeFromBase58Check(ownerAddress));
-    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap, ownerAddress);
+    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap);
     if (result != null
             && !result.isRevert() && StringUtils.isEmpty(result.getRuntimeError())
             && result.getHReturn() != null) {
@@ -356,7 +356,7 @@ public class FullNode {
 
   private static BigInteger getTRC20Decimal(String contractAddress, BlockCapsule baseBlockCap) {
     byte[] data = Hex.decode("313ce567");
-    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap, ByteString.EMPTY.toStringUtf8());
+    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap);
     if (result != null
             && !result.isRevert() && StringUtils.isEmpty(result.getRuntimeError())
             && result.getHReturn() != null) {
@@ -376,10 +376,10 @@ public class FullNode {
 
 
   private static ProgramResult triggerFromVM(String contractAddress, byte[] data,
-                                             BlockCapsule baseBlockCap, String ownAddress) {
+                                             BlockCapsule baseBlockCap) {
     SmartContractOuterClass.TriggerSmartContract.Builder build = SmartContractOuterClass.TriggerSmartContract.newBuilder();
     build.setData(ByteString.copyFrom(data));
-    build.setOwnerAddress(ByteString.copyFromUtf8(ownAddress));
+    build.setOwnerAddress(ByteString.copyFromUtf8("TCa16XAKQMy5kYvuM1YBGTiCyLYCKhhBuS"));
     build.setCallValue(0);
     build.setCallTokenValue(0);
     build.setTokenId(0);
