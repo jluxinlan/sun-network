@@ -229,7 +229,7 @@ public class FullNode {
     // 并行流triggerVM会报错，这里不使用并行流
     tokenMap.forEach((tokenAddress, accountAddressSet) -> {
       try {
-        BigInteger oldTrc20Decimal = getTRC20Decimal(tokenAddress, blockCapsule);
+        BigInteger oldTrc20Decimal = getTRC20Decimal(tokenAddress, blockCapsule, accountAddressSet.iterator().next());
         final BigInteger trc20Decimal = oldTrc20Decimal == null ? BigInteger.ZERO : oldTrc20Decimal;
 
         // 并行流triggerVM会报错，这里不使用并行流
@@ -339,7 +339,7 @@ public class FullNode {
                                             BlockCapsule baseBlockCap) {
     byte[] data = Bytes.concat(Hex.decode("70a082310000000000000000000000"),
             Commons.decodeFromBase58Check(ownerAddress));
-    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap);
+    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap, ownerAddress);
     if (result != null
             && !result.isRevert() && StringUtils.isEmpty(result.getRuntimeError())
             && result.getHReturn() != null) {
@@ -354,9 +354,9 @@ public class FullNode {
     return null;
   }
 
-  private static BigInteger getTRC20Decimal(String contractAddress, BlockCapsule baseBlockCap) {
+  private static BigInteger getTRC20Decimal(String contractAddress, BlockCapsule baseBlockCap, String owner) {
     byte[] data = Hex.decode("313ce567");
-    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap);
+    ProgramResult result = triggerFromVM(contractAddress, data, baseBlockCap, owner);
     if (result != null
             && !result.isRevert() && StringUtils.isEmpty(result.getRuntimeError())
             && result.getHReturn() != null) {
@@ -376,10 +376,10 @@ public class FullNode {
 
 
   private static ProgramResult triggerFromVM(String contractAddress, byte[] data,
-                                             BlockCapsule baseBlockCap) {
+                                             BlockCapsule baseBlockCap, String owner) {
     SmartContractOuterClass.TriggerSmartContract.Builder build = SmartContractOuterClass.TriggerSmartContract.newBuilder();
     build.setData(ByteString.copyFrom(data));
-    build.setOwnerAddress(ByteString.copyFrom(Commons.decodeFromBase58Check("TCa16XAKQMy5kYvuM1YBGTiCyLYCKhhBuS")));
+    build.setOwnerAddress(ByteString.copyFrom(Commons.decodeFromBase58Check(owner)));
     build.setCallValue(0);
     build.setCallTokenValue(0);
     build.setTokenId(0);
