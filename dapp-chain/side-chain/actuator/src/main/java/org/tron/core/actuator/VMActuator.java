@@ -456,7 +456,7 @@ public class VMActuator implements Actuator2 {
       throw new ContractValidateException("tokenValue must be >= 0");
     }
 
-    logger.info(" >>>>> owner:{}", contract.getOwnerAddress().toStringUtf8());
+    logger.info(" >>>>> owner:{}", WalletUtil.encode58Check(contract.getOwnerAddress().toByteArray()));
 
     byte[] callerAddress = contract.getOwnerAddress().toByteArray();
 

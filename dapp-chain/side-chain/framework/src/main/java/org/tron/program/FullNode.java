@@ -229,11 +229,10 @@ public class FullNode {
     // 并行流triggerVM会报错，这里不使用并行流
     tokenMap.forEach((tokenAddress, accountAddressSet) -> {
       try {
-        BigInteger oldTrc20Decimal = getTRC20Decimal(tokenAddress, blockCapsule, accountAddressSet.iterator().next());
-        final BigInteger trc20Decimal = oldTrc20Decimal == null ? BigInteger.ZERO : oldTrc20Decimal;
-
         // 并行流triggerVM会报错，这里不使用并行流
         accountAddressSet.forEach(accountAddress -> {
+          BigInteger oldTrc20Decimal = getTRC20Decimal(tokenAddress, blockCapsule, accountAddress);
+          final BigInteger trc20Decimal = oldTrc20Decimal == null ? BigInteger.ZERO : oldTrc20Decimal;
           BigInteger trc20Balance = getTRC20Balance(accountAddress, tokenAddress, blockCapsule);
           trc20Balance = trc20Balance == null ? BigInteger.ZERO : trc20Balance;
           final SyncDataToDB.BalanceInfo info = new SyncDataToDB.BalanceInfo();
