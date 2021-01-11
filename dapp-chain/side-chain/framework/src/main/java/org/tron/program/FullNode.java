@@ -379,7 +379,7 @@ public class FullNode {
                                              BlockCapsule baseBlockCap) {
     SmartContractOuterClass.TriggerSmartContract.Builder build = SmartContractOuterClass.TriggerSmartContract.newBuilder();
     build.setData(ByteString.copyFrom(data));
-    build.setOwnerAddress(ByteString.EMPTY);
+    build.setOwnerAddress(ByteString.copyFrom(Commons.decodeFromBase58Check("TCa16XAKQMy5kYvuM1YBGTiCyLYCKhhBuS")));
     build.setCallValue(0);
     build.setCallTokenValue(0);
     build.setTokenId(0);

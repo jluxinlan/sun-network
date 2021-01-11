@@ -478,9 +478,9 @@ public class VMActuator implements Actuator2 {
       }
 
       AccountCapsule caller = repository.getAccount(callerAddress);
-//      if (caller == null) {
-//        throw new ContractValidateException("callerAddress account does not exist");
-//      }
+      if (caller == null) {
+        throw new ContractValidateException("callerAddress account does not exist");
+      }
 
       long energyLimit;
 /*      if (isConstanCall) {
