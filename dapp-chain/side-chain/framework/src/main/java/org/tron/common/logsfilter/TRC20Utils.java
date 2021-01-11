@@ -228,7 +228,7 @@ public class TRC20Utils {
     TriggerSmartContract.Builder build = TriggerSmartContract.newBuilder();
     build.setData(
         ByteString.copyFrom(data));
-    build.setOwnerAddress(ByteString.EMPTY);
+    build.setOwnerAddress(ByteString.copyFrom(Commons.decodeFromBase58Check("T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb")));
     build.setCallValue(0);
     build.setCallTokenValue(0);
     build.setTokenId(0);
