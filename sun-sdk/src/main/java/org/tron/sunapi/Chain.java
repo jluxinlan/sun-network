@@ -1682,15 +1682,15 @@ public class Chain implements ChainInterface {
    * @return smart contract information
    * @author sun-network
    */
-  public SunNetworkResponse<SmartContract> getContract(String address) {
-    SunNetworkResponse<SmartContract> resp = new SunNetworkResponse<>();
+  public SunNetworkResponse<org.tron.protos.Protocol.SmartContractDataWrapper> getContract(String address) {
+    SunNetworkResponse<org.tron.protos.Protocol.SmartContractDataWrapper> resp = new SunNetworkResponse<>();
 
     byte[] addressBytes = AddressUtil.decodeFromBase58Check(address);
     if (addressBytes == null) {
       return resp.failed(ErrorCodeEnum.COMMON_PARAM_ERROR);
     }
 
-    SmartContract contractDeployContract = serverApi.getContract(addressBytes);
+    org.tron.protos.Protocol.SmartContractDataWrapper contractDeployContract = serverApi.getContract(addressBytes);
     if (contractDeployContract != null) {
       resp.success(contractDeployContract);
     } else {

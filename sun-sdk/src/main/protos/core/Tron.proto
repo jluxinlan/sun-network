@@ -698,3 +698,8 @@ message NodeInfo {
     }
   }
 }
+
+message SmartContractDataWrapper {
+  SmartContract smart_contract = 1;
+  bytes runtimecode = 2;
+}

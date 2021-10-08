@@ -51,7 +51,7 @@ public interface ChainInterface {
 
   SunNetworkResponse<TransactionResponse> updateEnergyLimit(String address, long originEnergyLimit);
 
-  SunNetworkResponse<SmartContract> getContract(String address);
+  SunNetworkResponse<org.tron.protos.Protocol.SmartContractDataWrapper> getContract(String address);
 
 
   //account

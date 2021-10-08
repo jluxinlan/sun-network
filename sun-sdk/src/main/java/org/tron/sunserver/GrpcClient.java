@@ -820,7 +820,7 @@ public class GrpcClient {
     return blockingStubFull.triggerConstantContract(request);
   }
 
-  public SmartContract getContract(byte[] address) {
+  public org.tron.protos.Protocol.SmartContractDataWrapper getContract(byte[] address) {
     ByteString byteString = ByteString.copyFrom(address);
     BytesMessage bytesMessage = BytesMessage.newBuilder().setValue(byteString).build();
     return blockingStubFull.getContract(bytesMessage);

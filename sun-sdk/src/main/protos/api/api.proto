@@ -401,7 +401,7 @@ service Wallet {
   rpc DeployContract (CreateSmartContract) returns (TransactionExtention) {
   }
 
-  rpc GetContract (BytesMessage) returns (SmartContract) {
+  rpc GetContract (BytesMessage) returns (SmartContractDataWrapper) {
   }
 
   rpc TriggerContract (TriggerSmartContract) returns (TransactionExtention) {

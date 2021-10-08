@@ -1609,7 +1609,7 @@ public class ServerApi {
     return false;
   }
 
-  public SmartContract getContract(byte[] address) {
+  public org.tron.protos.Protocol.SmartContractDataWrapper getContract(byte[] address) {
     return rpcCli.getContract(address);
   }
 
